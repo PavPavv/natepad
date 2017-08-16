@@ -10,16 +10,17 @@ if (Gem.win_platform?)
 end
 # /XXX
 
+require 'rubygems'
 
 require_relative 'post.rb'
 require_relative 'link.rb'
 require_relative 'task.rb'
 require_relative 'memo.rb'
 
-puts "Чё как, какие дела, нигга?"
-puts "Опять решил из ся Кафку строить, монтажник хренов?"
+puts "What is up, pal? This is ver 2 with SQLite!"
+puts "Trying to look like Kafka againg, bitch?"
 
-choices = Post.post_types
+choices = Post.post_types.keys
 
 choice = -1
 
@@ -32,10 +33,10 @@ until choice >= 0 && choice < choices.size
   choice = STDIN.gets.chomp.to_i
 end
 
-entry = Post.create(choice)
+entry = Post.create(choices[choice])
 
 entry.read_from_console
 
-entry.save
+id = entry.save_to_db
 
-puts "Так и быть оставлю твою брехню"
+puts "I'll do you a favor, piece of meat... check it! id = #{id}"

@@ -2,7 +2,7 @@ class Memo < Post
 
 
   def read_from_console
-    puts "Новая заметка (всё, что пишете до строчки \"end\"):"
+    puts "New note (everything 'till' \"end\"):"
 
     @text = []
     line = nil
@@ -23,4 +23,19 @@ class Memo < Post
 
   end
 
+
+  def to_db_hash
+    return super.merge(
+         {
+             'text' => @text.join('\n\r')
+         }
+    )
+  end
+
+  def load_data(data_hash)
+    super(data_hash) #сперва дергаем родительский метод для инициализации общих полей
+
+    # теперь прописываем свое специфичное поле
+    @text = data_hash['text'].split('\n\r')
+  end
 end
